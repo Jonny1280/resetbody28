@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Твоя трансформация начинается здесь</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #f9f9f9, #fff);
+      color: #333;
+    }
+    header {
+      background-image: url('https://i.imgur.com/NLsmIFx.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 80px 20px;
+      text-align: center;
+      color: #fff;
+    }
+    header h1 {
+      font-size: 36px;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    }
+    .form-container {
+      background: #ffffff;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .form-container h2 {
+      color: #ff6600;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .button-row button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .button-row .next-btn {
+      background: #ff6600;
+      color: #fff;
+    }
+    .button-row .prev-btn {
+      background: #ccc;
+      color: #333;
+    }
+    .pay-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: #28a745;
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 18px;
+    }
+    .image-banner {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .image-banner img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    @media (max-width: 480px) {
+      header h1 { font-size: 24px; }
+      .button-row { flex-direction: column; }
+      .button-row button { width: 100%; margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Твоя трансформация начинается здесь</h1>
+</header>
+
+<div class="form-container">
+  <h2>Заполни форму, чтобы получить персональный план</h2>
+  <form id="form">
+    <div class="form-step active">
+      <div class="image-banner"><img src="https://i.imgur.com/GU3FqTo.png" alt="Силуэт 1"></div>
+      <div class="form-group"><label>Возраст:</label><input type="number" id="age" /></div>
+      <div class="form-group"><label>Рост (см):</label><input type="number" id="height" /></div>
+      <div class="form-group"><label>Вес (кг):</label><input type="number" id="weight" /></div>
+      <div class="form-group"><label>Цель:</label>
+        <select id="goal">
+          <option>Сбросить вес</option>
+          <option>Стать активнее</option>
+        </select>
+      </div>
+      <div class="button-row">
+        <span></span><button type="button" class="next-btn">Далее</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <div class="image-banner"><img src="https://i.imgur.com/irIMUCl.png" alt="Силуэт 2"></div>
+      <div class="form-group"><label>Любимые продукты:</label><textarea id="favorites"></textarea></div>
+      <div class="button-row">
+        <button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <div class="image-banner"><img src="https://i.imgur.com/9hvhR5c.png" alt="Силуэт 3"></div>
+      <div class="form-group"><label>Как часто вы завтракаете?</label>
+        <select id="breakfast">
+          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не завтракаю</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Обедаете ли вы?</label>
+        <select id="lunch">
+          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не обедаю</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Ужинаете ли вы?</label>
+        <select id="dinner">
+          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не ужинаю</option>
+        </select>
+      </div>
+      <div class="button-row">
+        <button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <div class="image-banner"><img src="https://i.imgur.com/4sFZhjy.png" alt="Финальный силуэт"></div>
+      <h3 style="text-align:center;">Готово! Проверь свои данные и начни прямо сейчас.</h3>
+      <ul id="summaryList"></ul>
+      <div style="text-align:center;">
+        <a href="https://buy.stripe.com/5kA3ft6wgagD0DKdQQ" class="pay-btn">Оплатить программу</a>
+      </div>
+      <div class="button-row">
+        <button type="button" class="prev-btn">Назад</button><span></span>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const steps = document.querySelectorAll('.form-step');
+  let current = 0;
+  const nextBtns = document.querySelectorAll('.next-btn');
+  const prevBtns = document.querySelectorAll('.prev-btn');
+
+  nextBtns.forEach(btn => btn.onclick = () => {
+    if (current < steps.length - 1) {
+      steps[current].classList.remove('active');
+      current++;
+      steps[current].classList.add('active');
+    }
+  });
+
+  prevBtns.forEach(btn => btn.onclick = () => {
+    if (current > 0) {
+      steps[current].classList.remove('active');
+      current--;
+      steps[current].classList.add('active');
+    }
+  });
+</script>
+
+</body>
+</html>
