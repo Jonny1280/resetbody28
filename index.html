@@ -1,5 +1,5 @@
 
-<index.html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -12,6 +12,8 @@
     label { display: block; margin-top: 15px; font-weight: bold; }
     input, select, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
     .result { margin-top: 20px; padding: 15px; background: #f0fff4; border: 1px solid #c0eccd; border-radius: 5px; }
+    .payment-button { display: block; margin-top: 25px; text-align: center; }
+    .payment-button a { background-color: #ff6600; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -37,6 +39,11 @@
     <button onclick="calculatePlan()">Рассчитать мой план</button>
 
     <div class="result" id="result" style="display:none;"></div>
+
+    <div class="payment-button">
+      <p>Готовы начать? Купите программу прямо сейчас:</p>
+      <a href="https://buy.stripe.com/5kA3ft6wgagD0DKdQQ" target="_blank">Купить программу за 9,99 €</a>
+    </div>
   </div>
 
   <script>
