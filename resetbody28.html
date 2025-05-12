@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Персональная программа похудения</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #fff8f0; padding: 20px; }
+    .container { max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h1 { color: #ff6600; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    .result { margin-top: 20px; padding: 15px; background: #f0fff4; border: 1px solid #c0eccd; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Получите персональный план похудения</h1>
+    <p>Введите ваши данные, и получите индивидуальный план питания и режим дня.</p>
+
+    <label for="age">Возраст</label>
+    <input type="number" id="age" placeholder="Введите возраст">
+
+    <label for="weight">Вес (кг)</label>
+    <input type="number" id="weight" placeholder="Введите ваш вес">
+
+    <label for="height">Рост (см)</label>
+    <input type="number" id="height" placeholder="Введите ваш рост">
+
+    <label for="goal">Цель</label>
+    <select id="goal">
+      <option value="lose">Сбросить вес</option>
+      <option value="fit">Стать активнее</option>
+    </select>
+
+    <button onclick="calculatePlan()">Рассчитать мой план</button>
+
+    <div class="result" id="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    function calculatePlan() {
+      const age = +document.getElementById('age').value;
+      const weight = +document.getElementById('weight').value;
+      const height = +document.getElementById('height').value;
+      const goal = document.getElementById('goal').value;
+
+      if (!age || !weight || !height) {
+        alert('Пожалуйста, заполните все поля.');
+        return;
+      }
+
+      const heightM = height / 100;
+      const bmi = (weight / (heightM * heightM)).toFixed(1);
+      let category = '';
+
+      if (bmi < 18.5) category = 'Недовес';
+      else if (bmi < 25) category = 'Норма';
+      else if (bmi < 30) category = 'Избыточный вес';
+      else category = 'Ожирение';
+
+      const result = document.getElementById('result');
+      result.style.display = 'block';
+      result.innerHTML = `
+        <h3>Ваш результат:</h3>
+        <p><strong>ИМТ:</strong> ${bmi} (${category})</p>
+        <p><strong>Рекомендация:</strong> ${goal === 'lose' ? 'Вам подойдёт прерывистое голодание 16:8 и программа питания на 28 дней.' : 'Ваша цель — поддержание активности и энергии, вам подойдёт лёгкая программа.'}</p>
+        <p><em>Мы подготовим программу и отправим вам её по email.</em></p>
+      `;
+    }
+  </script>
+</body>
+</html>
