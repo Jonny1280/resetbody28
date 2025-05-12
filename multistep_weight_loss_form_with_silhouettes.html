@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Форма похудения с шагами и силуэтами</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+    .form-container { background: #fff; max-width: 600px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 8px; box-sizing: border-box;
+      border: 1px solid #ccc; border-radius: 4px;
+    }
+    .button-row { display: flex; justify-content: space-between; margin-top: 20px; }
+    .button-row button {
+      padding: 10px 20px; border: none; border-radius: 4px;
+      cursor: pointer; font-size: 16px;
+    }
+    .button-row .prev-btn { background: #ccc; }
+    .button-row .next-btn { background: #4caf50; color: #fff; }
+    .silhouette {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .silhouette img {
+      max-width: 120px;
+      opacity: 0.8;
+    }
+    .pay-btn {
+      display: inline-block; margin-top: 15px; padding: 12px 20px;
+      background: #0070ba; color: #fff; text-decoration: none; border-radius: 4px;
+      font-size: 16px; text-align: center;
+    }
+    .pay-btn:hover { background: #005b95; }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <form id="multiStepForm">
+    <!-- Шаг 1 -->
+    <div class="form-step active">
+      <div class="silhouette"><img src="https://i.imgur.com/GU3FqTo.png" alt="Step 1"></div>
+      <h2>Шаг 1: Данные</h2>
+      <div class="form-group"><label>Возраст:</label><input type="number" id="age"></div>
+      <div class="form-group"><label>Рост (см):</label><input type="number" id="height"></div>
+      <div class="form-group"><label>Вес (кг):</label><input type="number" id="weight"></div>
+      <div class="form-group">
+        <label>Цель:</label>
+        <select id="goal">
+          <option value="Сбросить вес">Сбросить вес</option>
+          <option value="Стать активнее">Стать активнее</option>
+        </select>
+      </div>
+      <div class="button-row"><span></span><button type="button" class="next-btn">Далее</button></div>
+    </div>
+
+    <!-- Шаг 2 -->
+    <div class="form-step">
+      <div class="silhouette"><img src="https://i.imgur.com/irIMUCl.png" alt="Step 2"></div>
+      <h2>Шаг 2: Еда</h2>
+      <div class="form-group"><label>Любимые продукты:</label><textarea id="favorites" rows="3"></textarea></div>
+      <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+    </div>
+
+    <!-- Шаг 3 -->
+    <div class="form-step">
+      <div class="silhouette"><img src="https://i.imgur.com/QvYw27R.png" alt="Step 3"></div>
+      <h2>Шаг 3: Приёмы пищи</h2>
+      <div class="form-group"><label>Завтрак:</label>
+        <select id="breakfast">
+          <option>Регулярно</option><option>Не завтракаю</option><option>Иногда</option><option>Редко</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Обед:</label>
+        <select id="lunch">
+          <option>Регулярно</option><option>Не обедаю</option><option>Иногда</option><option>Редко</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Ужин:</label>
+        <select id="dinner">
+          <option>Регулярно</option><option>Не ужинаю</option><option>Иногда</option><option>Редко</option>
+        </select>
+      </div>
+      <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+    </div>
+
+    <!-- Шаг 4 -->
+    <div class="form-step">
+      <div class="silhouette"><img src="https://i.imgur.com/9hvhR5c.png" alt="Step 4"></div>
+      <h2>Шаг 4: Когда вы едите</h2>
+      <div class="form-group"><label>Главный приём пищи:</label>
+        <select id="mainMeal">
+          <option>Утром</option><option>Днём</option><option>Вечером</option><option>Ночью</option>
+        </select>
+      </div>
+      <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+    </div>
+
+    <!-- Шаг 5 -->
+    <div class="form-step">
+      <div class="silhouette"><img src="https://i.imgur.com/vSzLMdt.png" alt="Step 5"></div>
+      <h2>Шаг 5: Образ жизни</h2>
+      <div class="form-group"><label>Образ жизни:</label>
+        <select id="lifestyle">
+          <option>Сидячий</option><option>Стоячий</option><option>Умеренно активный</option><option>Активный</option>
+        </select>
+      </div>
+      <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+    </div>
+
+    <!-- Шаг 6 -->
+    <div class="form-step">
+      <div class="silhouette"><img src="https://i.imgur.com/4sFZhjy.png" alt="Step 6"></div>
+      <h2>Итоги</h2>
+      <ul id="summaryList"></ul>
+      <a href="https://buy.stripe.com/5kA3ft6wgagD0DKdQQ" class="pay-btn">Оплатить программу</a>
+      <div class="button-row"><button type="button" class="prev-btn">Назад</button><span></span></div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const steps = document.querySelectorAll('.form-step');
+  let currentStep = 0;
+
+  function showStep(index) {
+    steps.forEach((step, i) => step.classList.toggle('active', i === index));
+  }
+
+  function nextStep() {
+    if (currentStep === steps.length - 2) generateSummary();
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  function generateSummary() {
+    const fields = [
+      ['Возраст', document.getElementById('age').value],
+      ['Рост', document.getElementById('height').value + ' см'],
+      ['Вес', document.getElementById('weight').value + ' кг'],
+      ['Цель', document.getElementById('goal').value],
+      ['Любимые продукты', document.getElementById('favorites').value],
+      ['Завтрак', document.getElementById('breakfast').value],
+      ['Обед', document.getElementById('lunch').value],
+      ['Ужин', document.getElementById('dinner').value],
+      ['Главный приём пищи', document.getElementById('mainMeal').value],
+      ['Образ жизни', document.getElementById('lifestyle').value]
+    ];
+    const list = document.getElementById('summaryList');
+    list.innerHTML = '';
+    fields.forEach(([label, value]) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${label}:</strong> ${value}`;
+      list.appendChild(li);
+    });
+  }
+
+  document.querySelectorAll('.next-btn').forEach(btn => btn.onclick = nextStep);
+  document.querySelectorAll('.prev-btn').forEach(btn => btn.onclick = prevStep);
+</script>
+
+</body>
+</html>
