@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Твоя трансформация начинается здесь</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ffe0cc, #ffe6f0);
+      color: #333;
+      overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(to right, #ff5e62, #ff9966);
+      color: white;
+      text-align: center;
+      padding: 50px 20px 30px;
+    }
+    header h1 { margin: 0; font-size: 32px; }
+    header p { font-size: 18px; font-style: italic; }
+    #google_translate_element { text-align: right; padding: 10px 20px; }
+    .form-container {
+      background: white;
+      max-width: 650px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .step { display: none; animation: fadeIn 0.4s ease-in-out; }
+    .step.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .step img { display: block; margin: 0 auto 20px; max-width: 140px; }
+    h2 { color: #ff5e62; text-align: center; }
+    .intro { text-align: center; margin-bottom: 20px; font-size: 15px; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; font-weight: bold; margin-bottom: 5px; }
+    input, select {
+      width: 100%; padding: 10px; border: 1px solid #ccc;
+      border-radius: 6px; box-sizing: border-box;
+    }
+    .button-row {
+      display: flex; justify-content: space-between;
+      margin-top: 20px;
+    }
+    .button-row button {
+      padding: 10px 20px; border: none; border-radius: 6px;
+      font-weight: bold; cursor: pointer;
+    }
+    .next-btn { background: #ff5e62; color: white; }
+    .prev-btn { background: #ccc; }
+    $1
+    .pay-btn {
+      animation: pulse 1.5s infinite;
+    }
+    .social-share {
+  animation: fadeInSocial 1.2s ease-in-out both;
+  opacity: 0;
+  transform: translateY(10px);
+}
+    .social-share a {
+      display: inline-block; background: #444;
+      color: white; padding: 10px 15px;
+      margin: 5px; border-radius: 6px;
+      text-decoration: none;
+    }
+    .error { border: 2px solid red; }
+  @keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 94, 98, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 94, 98, 0.7); }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(255, 94, 98, 0.7); }
+}
+@keyframes fadeInTimer {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+    box-shadow: 0 0 0 rgba(255, 94, 98, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 94, 98, 0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 94, 98, 0.9);
+  }
+}
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeInSocial {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.step-counter {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(255,255,255,0.85);
+  padding: 6px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-weight: bold;
+  z-index: 999;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: toastIn 0.5s ease-out forwards;
+  z-index: 999;
+}
+
+@keyframes toastIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastOut {
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+</style>
+</head>
+<body>
+<div class="step-counter">Шаг <span id="stepNow">1</span> из 7</div>
+<div id="toast" class="toast" style="display:none;">Добро пожаловать в программу трансформации!</div>
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement(
+    {pageLanguage: 'ru', includedLanguages: 'en,el,ru,es,de,fr,it,pt,uk,pl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE},
+    'google_translate_element'
+  );
+}
+document.getElementById('surveyForm').addEventListener('submit', e => e.preventDefault());
+
+// Таймер скидки на финальном шаге
+const step7 = document.getElementById('step7');
+const timerBlock = document.getElementById('timerBlock');
+const timerText = document.getElementById('timer');
+const ding = document.getElementById('ding');
+
+function startTimer(duration) {
+  let time = duration;
+  timerBlock.style.display = 'block';
+  const interval = setInterval(() => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    timerText.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    if (--time < 0) {
+      clearInterval(interval);
+      timerBlock.textContent = '⏰ Время истекло, но вы всё еще можете получить курс!';
+    }
+  }, 1000);
+}
+
+const observer = new MutationObserver(() => {
+  if (step7.classList.contains('active')) {
+    startTimer(20 * 60);
+    ding.play();
+    observer.disconnect();
+  }
+});
+observer.observe(step7, { attributes: true, attributeFilter: ['class'] });
+const stepNow = document.getElementById('stepNow');
+function updateCounter() {
+  stepNow.textContent = currentStep + 1;
+}
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.style.display = 'block';
+  toast.style.animation = 'toastIn 0.5s ease-out forwards';
+  setTimeout(() => {
+    toast.style.animation = 'toastOut 0.5s ease-in forwards';
+    setTimeout(() => { toast.style.display = 'none'; }, 500);
+  }, 3000);
+}
+showToast('Добро пожаловать в программу трансформации!');
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<header>
+  <h1>Твоя трансформация начинается здесь</h1>
+  <p>Каждое усилие — это шаг к лучшей версии себя</p>
+</header>
+
+<div class="form-container">
+  <form id="surveyForm">
+    <!-- Шаг 1: Начальные данные -->
+<div class="step active" id="step1">
+  <img src="https://cdn-icons-png.flaticon.com/512/4440/4440466.png" alt="Силуэт 1">
+  <h2>Шаг 1: Начальные данные</h2>
+  <div class="intro">Чтобы составить программу, нам нужно немного узнать о тебе.</div>
+  <div class="form-group"><label>Возраст:</label><input type="number" id="age" min="1" required></div>
+  <div class="form-group"><label>Рост (см):</label><input type="number" id="height" min="100" required></div>
+  <div class="form-group"><label>Вес (кг):</label><input type="number" id="weight" min="30" required></div>
+  <div class="form-group"><label>Цель:</label>
+    <select id="goal">
+      <option>Сбросить вес</option>
+      <option>Стать активнее</option>
+    </select>
+  </div>
+  <div class="button-row"><span></span><button type="button" class="next-btn">Далее</button></div>
+</div>
+
+<!-- Шаг 2: Образ жизни -->
+<div class="step" id="step2">
+  <img src="https://cdn-icons-png.flaticon.com/512/4440/4440401.png" alt="Силуэт 2">
+  <h2>Шаг 2: Твой образ жизни</h2>
+  <div class="intro">Образ жизни сильно влияет на результат. Расскажи немного о своём дне.</div>
+  <div class="form-group"><label>Как проходит твой день?</label>
+    <select id="lifestyle">
+      <option>Сидячий</option>
+      <option>Активный</option>
+      <option>Стоячий</option>
+      <option>Перемешанный</option>
+    </select>
+  </div>
+  <div class="form-group"><label>Сколько шагов в день ты проходишь (примерно)?</label><input type="number" id="steps" min="0"></div>
+  <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+</div>
+
+<!-- Шаг 3: Привычки -->
+<div class="step" id="step3">
+  <img src="https://cdn-icons-png.flaticon.com/512/4440/4440448.png" alt="Силуэт 3">
+  <h2>Шаг 3: Твои привычки</h2>
+  <div class="intro">Некоторые привычки мешают нам худеть, даже если мы стараемся.</div>
+  <div class="form-group"><label>Завтракаешь ли ты?</label>
+    <select id="breakfast">
+      <option>Регулярно</option>
+      <option>Иногда</option>
+      <option>Редко</option>
+      <option>Не завтракаю</option>
+    </select>
+  </div>
+  <div class="form-group"><label>Часто ли перекусываешь?</label>
+    <select id="snacks">
+      <option>Очень часто</option>
+      <option>Иногда</option>
+      <option>Редко</option>
+      <option>Не перекусываю</option>
+    </select>
+  </div>
+  <div class="form-group"><label>Как часто ешь поздно вечером?</label>
+    <select id="latenight">
+      <option>Каждый день</option>
+      <option>Иногда</option>
+      <option>Редко</option>
+      <option>Никогда</option>
+    </select>
+  </div>
+  <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+</div>
+
+<!-- Шаг 4: Эмоциональное питание -->
+<div class="step" id="step4">
+  <img src="https://cdn-icons-png.flaticon.com/512/4440/4440429.png" alt="Силуэт 4">
+  <h2>Шаг 4: Эмоциональное питание</h2>
+  <div class="intro">Порой мы едим не из-за голода. Это нормально. Просто будь честен с собой.</div>
+  <div class="form-group"><label>Когда ты чаще всего ешь?</label>
+    <select id="eatwhen">
+      <option>По голоду</option>
+      <option>По настроению</option>
+    </select>
+  </div>
+  <div class="form-group"><label>Бывает ли, что ешь от скуки или стресса?</label>
+    <select id="emoeat">
+      <option>Да</option>
+      <option>Нет</option>
+      <option>Иногда</option>
+    </select>
+  </div>
+  <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+</div>
+
+<!-- Шаг 5: Препятствия -->
+<div class="step" id="step5">
+  <img src="https://cdn-icons-png.flaticon.com/512/4440/4440438.png" alt="Силуэт 5">
+  <h2>Шаг 5: Что тебе мешает?</h2>
+  <div class="intro">Мы учитываем всё, даже то, что мешает. Это часть настоящей трансформации.</div>
+  <div class="form-group"><label>Что мешает тебе соблюдать режим?</label>
+    <select id="barrier">
+      <option>Нет времени</option>
+      <option>Нет сил</option>
+      <option>Постоянный стресс</option>
+      <option>Люблю еду</option>
+      <option>Пробовал — не получилось</option>
+    </select>
+  </div>
+  <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+</div>
+
+<!-- Шаг 6: Результаты -->
+<div class="step" id="step6">
+  <img src="https://cdn-icons-png.flaticon.com/512/4440/4440456.png" alt="Силуэт 6">
+  <h2>Шаг 6: Результаты</h2>
+  <div class="intro">Спасибо! На основе твоих ответов мы подберем тебе программу. Остался последний шаг!</div>
+  <div class="button-row"><button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button></div>
+</div>
+
+<!-- Шаг 7: Финальный мотивационный блок -->
+<div class="step" id="step7">
+  <img src="https://cdn-icons-png.flaticon.com/512/4440/4440474.png" alt="Готовый результат" />
+  <h2>Твоя программа готова!</h2>
+  <div class="intro">Ты прошёл все шаги. Теперь начни своё преображение — шаг за шагом, с уверенностью и поддержкой.</div>
+  <div style="text-align: center;">
+    <a href="https://buy.stripe.com/5kA3ft6wgagD0DKdQQ" class="pay-btn">Получить курс</a>
+  </div>
+  <div class="social-share">
+    <p>Поделись с друзьями:</p>
+    <a href="https://www.facebook.com/sharer/sharer.php" target="_blank">Facebook</a>
+    <a href="https://twitter.com/intent/tweet" target="_blank">Twitter</a>
+    <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+  <div style="text-align:center; margin-top:20px;">
+  <div id="timerBlock" style="font-size: 18px; font-weight: bold; color: #c0392b; display: none; animation: fadeInTimer 1.2s ease-in-out forwards;">
+    💥 СКИДКА! Только в течение <span id="timer">20:00</span> — курс за <del>18€</del> <strong>9.99€</strong>
+  </div>
+  <audio id="ding" preload="auto">
+    <source src="https://www.soundjay.com/buttons/sounds/button-29.mp3" type="audio/mpeg">
+  </audio>
+</div>
+</div>
+</div>
+</form>
+</div>
+
+<script>
+const steps = document.querySelectorAll('.step');
+const nextBtns = document.querySelectorAll('.next-btn');
+const prevBtns = document.querySelectorAll('.prev-btn');
+let currentStep = 0;
+
+function showStep(n) {
+  steps.forEach((step, i) => {
+    step.classList.toggle('active', i === n);
+  });
+}
+
+function validateStep(n) {
+  const current = steps[n];
+  const inputs = current.querySelectorAll('input');
+  let valid = true;
+  inputs.forEach(input => {
+    if (!input.checkValidity()) {
+      input.classList.add('error');
+      valid = false;
+    } else {
+      input.classList.remove('error');
+    }
+  });
+  return valid;
+}
+
+nextBtns.forEach((btn, index) => {
+  btn.addEventListener('click', () => {
+    if (!validateStep(currentStep)) return;
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      showStep(currentStep);
+  updateCounter();
+    updateCounter();
+    }
+  });
+});
+
+prevBtns.forEach((btn, index) => {
+  btn.addEventListener('click', () => {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+});
+</script>
+</body>
+</html>
