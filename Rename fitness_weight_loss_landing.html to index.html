@@ -1,196 +1,370 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Твоя трансформация начинается здесь</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Интервальное голодание</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter :wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #ff6f00;
+      --bg-light: #fff5ec;
+      --bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #f9f9f9;
+      --accent: #ffe0cc;
+    }
+
+    body.dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(to bottom right, #f9f9f9, #fff);
-      color: #333;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      transition: background-color 0.3s, color 0.3s;
     }
-    header {
-      background-image: url('https://i.imgur.com/NLsmIFx.jpg');
-      background-size: cover;
-      background-position: center;
-      padding: 80px 20px;
-      text-align: center;
-      color: #fff;
-    }
-    header h1 {
-      font-size: 36px;
-      margin: 0;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-    }
-    .form-container {
-      background: #ffffff;
-      max-width: 600px;
-      margin: 30px auto;
+
+    .container {
+      background: white;
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease-in-out;
     }
-    .form-container h2 {
-      color: #ff6600;
-      text-align: center;
+
+    .dark-mode .container {
+      background: var(--bg-dark);
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .step.active {
+      display: block;
+      animation: slideInRight 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: var(--accent);
+      border-radius: 5px;
+      overflow: hidden;
       margin-bottom: 20px;
     }
-    .form-step { display: none; }
-    .form-step.active { display: block; }
-    .form-group {
-      margin-bottom: 15px;
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: var(--primary-color);
+      transition: width 0.3s ease-in-out;
     }
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
+
+    h2 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
     }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
+
+    input[type="range"] {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
     }
-    .button-row {
+
+    .slider-container {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .slider-value {
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .buttons {
       display: flex;
       justify-content: space-between;
+      gap: 10px;
       margin-top: 20px;
     }
-    .button-row button {
-      padding: 10px 20px;
-      border: none;
+
+    .lang-switch {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: 1px solid #ccc;
+      color: var(--primary-color);
+      padding: 5px 10px;
       border-radius: 6px;
-      font-weight: bold;
+      font-size: 14px;
       cursor: pointer;
     }
-    .button-row .next-btn {
-      background: #ff6600;
-      color: #fff;
-    }
-    .button-row .prev-btn {
-      background: #ccc;
-      color: #333;
-    }
-    .pay-btn {
-      display: inline-block;
-      margin-top: 20px;
-      background: #28a745;
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 24px;
+
+    .dark-toggle {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: none;
+      border: 1px solid #ccc;
+      color: var(--primary-color);
+      padding: 5px 10px;
       border-radius: 6px;
-      font-size: 18px;
+      font-size: 14px;
+      cursor: pointer;
     }
-    .image-banner {
-      text-align: center;
-      margin: 20px 0;
+
+    .loading {
+      width: 50px;
+      height: 50px;
+      margin: 20px auto;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
-    .image-banner img {
-      max-width: 100%;
-      border-radius: 8px;
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    @media (max-width: 480px) {
-      header h1 { font-size: 24px; }
-      .button-row { flex-direction: column; }
-      .button-row button { width: 100%; margin-bottom: 10px; }
+
+    img.logo {
+      display: block;
+      margin: 0 auto 20px auto;
+      width: 80px;
+    }
+
+    .intro p {
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Твоя трансформация начинается здесь</h1>
-</header>
+<div class="container">
 
-<div class="form-container">
-  <h2>Заполни форму, чтобы получить персональный план</h2>
-  <form id="form">
-    <div class="form-step active">
-      <div class="image-banner"><img src="https://i.imgur.com/GU3FqTo.png" alt="Силуэт 1"></div>
-      <div class="form-group"><label>Возраст:</label><input type="number" id="age" /></div>
-      <div class="form-group"><label>Рост (см):</label><input type="number" id="height" /></div>
-      <div class="form-group"><label>Вес (кг):</label><input type="number" id="weight" /></div>
-      <div class="form-group"><label>Цель:</label>
-        <select id="goal">
-          <option>Сбросить вес</option>
-          <option>Стать активнее</option>
-        </select>
-      </div>
-      <div class="button-row">
-        <span></span><button type="button" class="next-btn">Далее</button>
+  <img src="https://via.placeholder.com/80x80?text=Logo " alt="Логотип" class="logo">
+
+  <button class="lang-switch" onclick="toggleLang()">EN/RU</button>
+  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+
+  <div class="progress-bar">
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <form id="multiStepForm">
+
+    <!-- Приветствие -->
+    <div class="step active intro" data-step="1">
+      <h2 id="welcomeTitle">Добро пожаловать!</h2>
+      <p id="welcomeText">Заполните несколько простых шагов, чтобы получить персональную программу питания.</p>
+    </div>
+
+    <!-- Шаг 1 -->
+    <div class="step">
+      <h2 id="nameLabel">Ваше имя:</h2>
+      <input type="text" name="name" placeholder="Введите ваше имя" required/>
+    </div>
+
+    <!-- Шаг 2 -->
+    <div class="step">
+      <h2 id="ageLabel">Ваш возраст:</h2>
+      <input type="number" name="age" placeholder="Сколько вам лет?" required/>
+    </div>
+
+    <!-- Шаг 3 -->
+    <div class="step">
+      <h2 id="weightLabel">Ваш вес:</h2>
+      <div class="slider-container">
+        <input type="range" name="weight" min="40" max="200" value="70" oninput="document.getElementById('weightValue').innerText = this.value + ' кг'">
+        <div class="slider-value" id="weightValue">70 кг</div>
       </div>
     </div>
 
-    <div class="form-step">
-      <div class="image-banner"><img src="https://i.imgur.com/irIMUCl.png" alt="Силуэт 2"></div>
-      <div class="form-group"><label>Любимые продукты:</label><textarea id="favorites"></textarea></div>
-      <div class="button-row">
-        <button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button>
-      </div>
+    <!-- Шаг 4 -->
+    <div class="step">
+      <h2 id="goalLabel">Какая у вас цель?</h2>
+      <select name="goal" required>
+        <option value="">Выберите цель</option>
+        <option value="lose">Похудение</option>
+        <option value="maintain">Поддержание веса</option>
+        <option value="gain">Набор массы</option>
+      </select>
     </div>
 
-    <div class="form-step">
-      <div class="image-banner"><img src="https://i.imgur.com/9hvhR5c.png" alt="Силуэт 3"></div>
-      <div class="form-group"><label>Как часто вы завтракаете?</label>
-        <select id="breakfast">
-          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не завтракаю</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Обедаете ли вы?</label>
-        <select id="lunch">
-          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не обедаю</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Ужинаете ли вы?</label>
-        <select id="dinner">
-          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не ужинаю</option>
-        </select>
-      </div>
-      <div class="button-row">
-        <button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button>
-      </div>
+    <!-- Шаг 5 -->
+    <div class="step">
+      <h2 id="activityLabel">Уровень активности:</h2>
+      <select name="activity" required>
+        <option value="">Выберите уровень</option>
+        <option value="low">Малоподвижный</option>
+        <option value="medium">Средний</option>
+        <option value="high">Активный</option>
+      </select>
     </div>
 
-    <div class="form-step">
-      <div class="image-banner"><img src="https://i.imgur.com/4sFZhjy.png" alt="Финальный силуэт"></div>
-      <h3 style="text-align:center;">Готово! Проверь свои данные и начни прямо сейчас.</h3>
-      <ul id="summaryList"></ul>
-      <div style="text-align:center;">
-        <a href="https://buy.stripe.com/5kA3ft6wgagD0DKdQQ" class="pay-btn">Оплатить программу</a>
-      </div>
-      <div class="button-row">
-        <button type="button" class="prev-btn">Назад</button><span></span>
-      </div>
+    <!-- Шаг 6 -->
+    <div class="step result-step">
+      <h2 id="resultLabel">Результат</h2>
+      <div class="loading"></div>
+      <div class="result" id="finalResult">Обработка данных...</div>
     </div>
+
+    <div class="buttons">
+      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Назад</button>
+      <button type="button" id="nextBtn" onclick="nextPrev(1)">Далее</button>
+    </div>
+
   </form>
 </div>
 
 <script>
-  const steps = document.querySelectorAll('.form-step');
-  let current = 0;
-  const nextBtns = document.querySelectorAll('.next-btn');
-  const prevBtns = document.querySelectorAll('.prev-btn');
+  let currentStep = 1;
+  const steps = document.querySelectorAll(".step");
+  const totalSteps = steps.length;
 
-  nextBtns.forEach(btn => btn.onclick = () => {
-    if (current < steps.length - 1) {
-      steps[current].classList.remove('active');
-      current++;
-      steps[current].classList.add('active');
+  const texts = {
+    ru: {
+      welcomeTitle: "Добро пожаловать!",
+      welcomeText: "Заполните несколько простых шагов, чтобы получить персональную программу питания.",
+      nameLabel: "Ваше имя:",
+      ageLabel: "Ваш возраст:",
+      weightLabel: "Ваш вес:",
+      goalLabel: "Какая у вас цель?",
+      activityLabel: "Уровень активности:",
+      resultLabel: "Результат"
+    },
+    en: {
+      welcomeTitle: "Welcome!",
+      welcomeText: "Fill out a few simple steps to get your personal nutrition plan.",
+      nameLabel: "Your name:",
+      ageLabel: "Your age:",
+      weightLabel: "Your weight:",
+      goalLabel: "What is your goal?",
+      activityLabel: "Activity level:",
+      resultLabel: "Result"
     }
-  });
+  };
 
-  prevBtns.forEach(btn => btn.onclick = () => {
-    if (current > 0) {
-      steps[current].classList.remove('active');
-      current--;
-      steps[current].classList.add('active');
+  function localize() {
+    document.querySelectorAll("[id^='welcomeTitle']").forEach(el => el.textContent = texts[lang].welcomeTitle);
+    document.querySelectorAll("[id^='welcomeText']").forEach(el => el.textContent = texts[lang].welcomeText);
+    document.querySelectorAll("[id^='nameLabel']").forEach(el => el.textContent = texts[lang].nameLabel);
+    document.querySelectorAll("[id^='ageLabel']").forEach(el => el.textContent = texts[lang].ageLabel);
+    document.querySelectorAll("[id^='weightLabel']").forEach(el => el.textContent = texts[lang].weightLabel);
+    document.querySelectorAll("[id^='goalLabel']").forEach(el => el.textContent = texts[lang].goalLabel);
+    document.querySelectorAll("[id^='activityLabel']").forEach(el => el.textContent = texts[lang].activityLabel);
+    document.querySelectorAll("[id^='resultLabel']").forEach(el => el.textContent = texts[lang].resultLabel);
+  }
+
+  let lang = "ru";
+  function toggleLang() {
+    lang = lang === "ru" ? "en" : "ru";
+    localize();
+  }
+
+  function showStep(n) {
+    steps.forEach((step, index) => {
+      step.classList.toggle("active", index === n);
+    });
+    updateProgress();
+    toggleButtons(n);
+  }
+
+  function nextPrev(n) {
+    if (n === 1 && !validateForm()) return false;
+
+    currentStep += n;
+
+    if (currentStep === totalSteps - 1) {
+      // Загрузка
+      setTimeout(() => {
+        const name = document.forms[0]["name"].value;
+        const age = document.forms[0]["age"].value;
+        const weight = document.forms[0]["weight"].value;
+        const goal = document.forms[0]["goal"].value;
+        const activity = document.forms[0]["activity"].value;
+
+        const goals = {
+          lose: {"ru": "похудению", "en": "weight loss"},
+          maintain: {"ru": "поддержанию веса", "en": "weight maintenance"},
+          gain: {"ru": "набору мышечной массы", "en": "muscle gain"}
+        };
+
+        const activities = {
+          low: {"ru": "малоподвижный", "en": "sedentary"},
+          medium: {"ru": "средний", "en": "moderate"},
+          high: {"ru": "высокий", "en": "active"}
+        };
+
+        document.getElementById("finalResult").innerHTML =
+          `<strong>${name}</strong>, спасибо!<br/>Вам ${age} лет.<br/>Вес: <strong>${weight} кг</strong>.<br/>Цель: ${goals[goal][lang]}.<br/>Активность: ${activities[activity][lang]}.`;
+      }, 1500);
     }
-  });
+
+    showStep(currentStep - 1);
+  }
+
+  function validateForm() {
+    const inputs = document.forms[0].querySelectorAll(":required");
+    for (let i = 0; i < inputs.length; i++) {
+      if (!inputs[i].value.trim()) {
+        alert("Пожалуйста, заполните все поля.");
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function updateProgress() {
+    const percent = (currentStep / totalSteps) * 100;
+    document.getElementById("progress").style.width = percent + "%";
+  }
+
+  function toggleButtons(step) {
+    document.getElementById("prevBtn").style.display = step === 0 ? "none" : "inline-block";
+    document.getElementById("nextBtn").innerText = step === totalSteps - 1 ? "Завершить" : "Далее";
+  }
+
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
+
+  showStep(0);
 </script>
 
 </body>
