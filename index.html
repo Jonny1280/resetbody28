@@ -5,110 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Худей без стресса</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://unpkg.com/aos @2.3.4/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX "
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+<header>
+  <div class="lang-switcher">
+    <button onclick="setLang('ru')">РУС</button>
+    <button onclick="setLang('en')">ENG</button>
+  </div>
+  <h1 data-lang="ru">Худеем без стресса</h1>
+  <h1 data-lang="en" style="display: none;">Lose weight without stress</h1>
+</header>
 
-  <!-- Yandex.Metrica -->
-  <noscript><div><img src="https://mc.yandex.ru/watch/12345678 " style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-
-  <header>
-    <div class="lang-switcher">
-      <button onclick="setLang('ru')">РУС</button>
-      <button onclick="setLang('en')">ENG</button>
-      <button onclick="setLang('es')">ESP</button>
-      <button onclick="setLang('de')">DEU</button>
-    </div>
-
-    <h1 data-lang="ru">Худеем без стресса</h1>
-    <h1 data-lang="en" style="display: none;">Lose weight without stress</h1>
-    <h1 data-lang="es" style="display: none;">Pierde peso sin estrés</h1>
-    <h1 data-lang="de" style="display: none;">Abnehmen ohne Stress</h1>
-
-    <p data-lang="ru">Получите персональный кето-план всего за 60 секунд</p>
-    <p data-lang="en" style="display: none;">Get your personal keto plan in just 60 seconds</p>
-    <p data-lang="es" style="display: none;">Obtén tu plan cetogénico personal en solo 60 segundos</p>
-    <p data-lang="de" style="display: none;">Erhalte deinen persönlichen Keto-Plan in nur 60 Sekunden</p>
-  </header>
-
-  <section class="form-section" data-aos="fade-up">
-    <form action="https://formspree.io/f/YOUR_FORM_ID " method="POST">
-      <input type="text" name="name" placeholder="
-        Имя / Name / Nombre / Name" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <button type="submit">Получить план / Get Plan / Obtener plan / Plan erhalten</button>
-    </form>
+<main>
+  <!-- Шаг 1 -->
+  <section id="step-1" class="step active">
+    <h2 data-lang="ru">Шаг 1: Ваш возраст</h2>
+    <h2 data-lang="en" style="display: none;">Step 1: Your Age</h2>
+    <input type="number" id="age" placeholder="Введите возраст" required />
+    <button onclick="nextStep()">Далее</button>
   </section>
 
-  <section class="features" data-aos="fade-up">
-    <div><img src="images/icon-clock.png" alt="">
-      <span data-lang="ru">До 6 фунтов за первую неделю</span>
-      <span data-lang="en" style="display: none;">Up to 6 lbs in the first week</span>
-      <span data-lang="es" style="display: none;">Hasta 6 libras en la primera semana</span>
-      <span data-lang="de" style="display: none;">Bis zu 6 Pfund in der ersten Woche</span>
-    </div>
-    <div><img src="images/icon-food.png" alt="">
-      <span data-lang="ru">Персональное меню</span>
-      <span data-lang="en" style="display: none;">Personal menu</span>
-      <span data-lang="es" style="display: none;">Menú personalizado</span>
-      <span data-lang="de" style="display: none;">Persönliches Menü</span>
-    </div>
-    <div><img src="images/icon-support.png" alt="">
-      <span data-lang="ru">Поддержка диетолога</span>
-      <span data-lang="en" style="display: none;">Dietitian support</span>
-      <span data-lang="es" style="display: none;">Soporte del nutricionista</span>
-      <span data-lang="de" style="display: none;">Ernährungsberater-Support</span>
-    </div>
+  <!-- Шаг 2 -->
+  <section id="step-2" class="step">
+    <h2 data-lang="ru">Шаг 2: Введите Email</h2>
+    <h2 data-lang="en" style="display: none;">Step 2: Enter Email</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <button onclick="submitForm()">Получить план</button>
   </section>
+</main>
 
-  <footer>
-    <p><strong data-lang="ru">Отказ от ответственности:</strong><span data-lang="en" style="display: none;"><strong>Disclaimer:</strong></span><span data-lang="es" style="display: none;"><strong>Aviso:</strong></span><span data-lang="de" style="display: none;"><strong>Hinweis:</strong></span>
-      Результаты могут отличаться. Консультации не заменяют врачебные рекомендации.</p>
-    <p><a href="#">Политика конфиденциальности / Privacy Policy / Política de privacidad / Datenschutz</a></p>
-  </footer>
+<footer>
+  <p><strong data-lang="ru">Отказ от ответственности:</strong> Результаты могут отличаться.</p>
+</footer>
 
-  <!-- AOS.js -->
-  <script src="https://unpkg.com/aos @2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
+<!-- Многоязычность -->
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      if (el.getAttribute('data-lang') === lang) {
+        el.style.display = 'inline';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  }
 
-  <!-- Многоязычность -->
-  <script>
-    function setLang(lang) {
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        if (el.getAttribute('data-lang') === lang) {
-          el.style.display = 'inline';
-        } else {
-          el.style.display = 'none';
-        }
-      });
+  window.onload = () => setLang('ru');
+</script>
+
+<!-- Переход между шагами -->
+<script>
+  let currentStep = 1;
+
+  function nextStep() {
+    const age = document.getElementById("age").value;
+    if (!age || age <= 0) {
+      alert("Пожалуйста, введите корректный возраст");
+      return;
+    }
+    document.getElementById("step-1").classList.remove("active");
+    document.getElementById("step-2").classList.add("active");
+  }
+
+  function submitForm() {
+    const email = document.getElementById("email").value;
+    if (!email.includes("@")) {
+      alert("Введите корректный email");
+      return;
     }
 
-    window.onload = () => setLang('ru');
-  </script>
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOURLINEID "></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-YOURLINEID');
-  </script>
+    // Отправка через Formspree
+    fetch("https://formspree.io/f/YOUR_FORM_ID ", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ age: document.getElementById("age").value, email: email }),
+    })
+    .then(() => {
+      alert("Спасибо! Мы вышлем вам план!");
+    })
+    .catch(err => {
+      alert("Ошибка отправки. Попробуйте позже.");
+    });
+  }
+</script>
 
 </body>
-</html>
- * {
-  box-sizing: border-box;
-}
-
-body {
+</html>body {
   font-family: Arial, sans-serif;
   background: #f9f9f9;
   color: #333;
@@ -129,82 +112,27 @@ header {
   padding: 30px 20px;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 1.8em;
+.step {
+  display: none;
 }
-
-header p {
-  font-size: 1em;
-  margin-top: 10px;
-}
-
-.form-section {
-  max-width: 90%;
-  margin: 30px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-form input {
+.step.active {
   display: block;
+}
+
+.step input {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 1em;
 }
 
-form button {
-  background: #4CAF50;
+.step button {
+  background: #FFA500;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
   width: 100%;
-  font-size: 1em;
-}
-
-.features {
-  max-width: 90%;
-  margin: 30px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.features div {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-footer {
-  background: #eee;
-  padding: 20px;
-  text-align: center;
-  font-size: 0.9em;
-}
-
-/* Адаптивность */
-@media (min-width: 600px) {
-  .form-section {
-    max-width: 400px;
-  }
-
-  header h1 {
-    font-size: 2.2em;
-  }
-
-  header p {
-    font-size: 1.2em;
-  }
-
-  .features {
-    max-width: 600px;
-  }
 }
