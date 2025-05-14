@@ -1,371 +1,186 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Интервальное голодание</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter :wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #ff6f00;
-      --bg-light: #fff5ec;
-      --bg-dark: #1e1e1e;
-      --text-light: #333;
-      --text-dark: #f9f9f9;
-      --accent: #ffe0cc;
-    }
-
-    body.dark-mode {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .dark-mode .container {
-      background: var(--bg-dark);
-    }
-
-    .step {
-      display: none;
-      animation: fadeIn 0.4s ease-in-out;
-    }
-
-    .step.active {
-      display: block;
-      animation: slideInRight 0.4s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideInRight {
-      from { transform: translateX(50px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    .progress-bar {
-      height: 6px;
-      background: var(--accent);
-      border-radius: 5px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .progress {
-      height: 100%;
-      width: 0%;
-      background: var(--primary-color);
-      transition: width 0.3s ease-in-out;
-    }
-
-    h2 {
-      color: var(--primary-color);
-      margin-bottom: 10px;
-    }
-
-    input[type="range"] {
-      width: 100%;
-    }
-
-    .slider-container {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    .slider-value {
-      margin-top: 5px;
-      font-weight: bold;
-    }
-
-    button {
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      padding: 14px 20px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .lang-switch {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: 1px solid #ccc;
-      color: var(--primary-color);
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .dark-toggle {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: none;
-      border: 1px solid #ccc;
-      color: var(--primary-color);
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .loading {
-      width: 50px;
-      height: 50px;
-      margin: 20px auto;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid var(--primary-color);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    img.logo {
-      display: block;
-      margin: 0 auto 20px auto;
-      width: 80px;
-    }
-
-    .intro p {
-      line-height: 1.6;
-    }
-  </style>
+  <title>Худей без стресса</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://unpkg.com/aos @2.3.4/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-
-  <img src="https://via.placeholder.com/80x80?text=Logo " alt="Логотип" class="logo">
-
-  <button class="lang-switch" onclick="toggleLang()">EN/RU</button>
-  <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
-
-  <div class="progress-bar">
-    <div class="progress" id="progress"></div>
+<header>
+  <div class="lang-switcher">
+    <button onclick="setLang('ru')">РУС</button>
+    <button onclick="setLang('en')">ENG</button>
+    <button onclick="setLang('es')">ESP</button>
+    <button onclick="setLang('de')">DEU</button>
   </div>
+  <h1 data-lang="ru">Худеем без стресса</h1>
+  <h1 data-lang="en" style="display: none;">Lose weight without stress</h1>
+  <h1 data-lang="es" style="display: none;">Pierde peso sin estrés</h1>
+  <h1 data-lang="de" style="display: none;">Abnehmen ohne Stress</h1>
+</header>
 
-  <form id="multiStepForm">
+<main>
+  <!-- Шаг 1 -->
+  <section id="step-1" class="step active" data-aos="fade-up">
+    <h2 data-lang="ru">Шаг 1: Ваш возраст</h2>
+    <h2 data-lang="en" style="display: none;">Step 1: Your Age</h2>
+    <input type="number" id="age" placeholder="Введите возраст" required />
+    <button onclick="nextStep()">Далее</button>
+  </section>
 
-    <!-- Приветствие -->
-    <div class="step active intro" data-step="1">
-      <h2 id="welcomeTitle">Добро пожаловать!</h2>
-      <p id="welcomeText">Заполните несколько простых шагов, чтобы получить персональную программу питания.</p>
-    </div>
+  <!-- Шаг 2 -->
+  <section id="step-2" class="step" data-aos="fade-up">
+    <h2 data-lang="ru">Шаг 2: Введите Email</h2>
+    <h2 data-lang="en" style="display: none;">Step 2: Enter Email</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <button onclick="submitForm()">Получить план</button>
+  </section>
 
-    <!-- Шаг 1 -->
-    <div class="step">
-      <h2 id="nameLabel">Ваше имя:</h2>
-      <input type="text" name="name" placeholder="Введите ваше имя" required/>
-    </div>
+  <!-- Изображение -->
+  <div class="image-section" data-aos="fade-in">
+    <img src="images/model.png" alt="Model" />
+  </div>
+</main>
 
-    <!-- Шаг 2 -->
-    <div class="step">
-      <h2 id="ageLabel">Ваш возраст:</h2>
-      <input type="number" name="age" placeholder="Сколько вам лет?" required/>
-    </div>
+<footer>
+  <p><strong data-lang="ru">Отказ от ответственности:</strong> Результаты могут отличаться.</p>
+</footer>
 
-    <!-- Шаг 3 -->
-    <div class="step">
-      <h2 id="weightLabel">Ваш вес:</h2>
-      <div class="slider-container">
-        <input type="range" name="weight" min="40" max="200" value="70" oninput="document.getElementById('weightValue').innerText = this.value + ' кг'">
-        <div class="slider-value" id="weightValue">70 кг</div>
-      </div>
-    </div>
+<!-- AOS.js -->
+<script src="https://unpkg.com/aos @2.3.4/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 
-    <!-- Шаг 4 -->
-    <div class="step">
-      <h2 id="goalLabel">Какая у вас цель?</h2>
-      <select name="goal" required>
-        <option value="">Выберите цель</option>
-        <option value="lose">Похудение</option>
-        <option value="maintain">Поддержание веса</option>
-        <option value="gain">Набор массы</option>
-      </select>
-    </div>
+<!-- Многоязычность -->
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      if (el.getAttribute('data-lang') === lang) {
+        el.style.display = 'inline';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  }
 
-    <!-- Шаг 5 -->
-    <div class="step">
-      <h2 id="activityLabel">Уровень активности:</h2>
-      <select name="activity" required>
-        <option value="">Выберите уровень</option>
-        <option value="low">Малоподвижный</option>
-        <option value="medium">Средний</option>
-        <option value="high">Активный</option>
-      </select>
-    </div>
+  window.onload = () => setLang('ru');
+</script>
 
-    <!-- Шаг 6 -->
-    <div class="step result-step">
-      <h2 id="resultLabel">Результат</h2>
-      <div class="loading"></div>
-      <div class="result" id="finalResult">Обработка данных...</div>
-    </div>
-
-    <div class="buttons">
-      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Назад</button>
-      <button type="button" id="nextBtn" onclick="nextPrev(1)">Далее</button>
-    </div>
-
-  </form>
-</div>
-
+<!-- Переход между шагами -->
 <script>
   let currentStep = 1;
-  const steps = document.querySelectorAll(".step");
-  const totalSteps = steps.length;
 
-  const texts = {
-    ru: {
-      welcomeTitle: "Добро пожаловать!",
-      welcomeText: "Заполните несколько простых шагов, чтобы получить персональную программу питания.",
-      nameLabel: "Ваше имя:",
-      ageLabel: "Ваш возраст:",
-      weightLabel: "Ваш вес:",
-      goalLabel: "Какая у вас цель?",
-      activityLabel: "Уровень активности:",
-      resultLabel: "Результат"
-    },
-    en: {
-      welcomeTitle: "Welcome!",
-      welcomeText: "Fill out a few simple steps to get your personal nutrition plan.",
-      nameLabel: "Your name:",
-      ageLabel: "Your age:",
-      weightLabel: "Your weight:",
-      goalLabel: "What is your goal?",
-      activityLabel: "Activity level:",
-      resultLabel: "Result"
+  function nextStep() {
+    const age = document.getElementById("age").value;
+    if (!age || age <= 0) {
+      alert("Пожалуйста, введите корректный возраст");
+      return;
     }
-  };
-
-  function localize() {
-    document.querySelectorAll("[id^='welcomeTitle']").forEach(el => el.textContent = texts[lang].welcomeTitle);
-    document.querySelectorAll("[id^='welcomeText']").forEach(el => el.textContent = texts[lang].welcomeText);
-    document.querySelectorAll("[id^='nameLabel']").forEach(el => el.textContent = texts[lang].nameLabel);
-    document.querySelectorAll("[id^='ageLabel']").forEach(el => el.textContent = texts[lang].ageLabel);
-    document.querySelectorAll("[id^='weightLabel']").forEach(el => el.textContent = texts[lang].weightLabel);
-    document.querySelectorAll("[id^='goalLabel']").forEach(el => el.textContent = texts[lang].goalLabel);
-    document.querySelectorAll("[id^='activityLabel']").forEach(el => el.textContent = texts[lang].activityLabel);
-    document.querySelectorAll("[id^='resultLabel']").forEach(el => el.textContent = texts[lang].resultLabel);
+    document.getElementById("step-1").classList.remove("active");
+    document.getElementById("step-2").classList.add("active");
   }
 
-  let lang = "ru";
-  function toggleLang() {
-    lang = lang === "ru" ? "en" : "ru";
-    localize();
-  }
+  function submitForm() {
+    const email = document.getElementById("email").value;
+    if (!email.includes("@")) {
+      alert("Введите корректный email");
+      return;
+    }
 
-  function showStep(n) {
-    steps.forEach((step, index) => {
-      step.classList.toggle("active", index === n);
+    // Отправка через Formspree
+    fetch("https://formspree.io/f/YOUR_FORM_ID ", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ age: document.getElementById("age").value, email: email }),
+    })
+    .then(() => {
+      alert("Спасибо! Мы вышлем вам план!");
+    })
+    .catch(err => {
+      alert("Ошибка отправки. Попробуйте позже.");
     });
-    updateProgress();
-    toggleButtons(n);
   }
-
-  function nextPrev(n) {
-    if (n === 1 && !validateForm()) return false;
-
-    currentStep += n;
-
-    if (currentStep === totalSteps - 1) {
-      // Загрузка
-      setTimeout(() => {
-        const name = document.forms[0]["name"].value;
-        const age = document.forms[0]["age"].value;
-        const weight = document.forms[0]["weight"].value;
-        const goal = document.forms[0]["goal"].value;
-        const activity = document.forms[0]["activity"].value;
-
-        const goals = {
-          lose: {"ru": "похудению", "en": "weight loss"},
-          maintain: {"ru": "поддержанию веса", "en": "weight maintenance"},
-          gain: {"ru": "набору мышечной массы", "en": "muscle gain"}
-        };
-
-        const activities = {
-          low: {"ru": "малоподвижный", "en": "sedentary"},
-          medium: {"ru": "средний", "en": "moderate"},
-          high: {"ru": "высокий", "en": "active"}
-        };
-
-        document.getElementById("finalResult").innerHTML =
-          `<strong>${name}</strong>, спасибо!<br/>Вам ${age} лет.<br/>Вес: <strong>${weight} кг</strong>.<br/>Цель: ${goals[goal][lang]}.<br/>Активность: ${activities[activity][lang]}.`;
-      }, 1500);
-    }
-
-    showStep(currentStep - 1);
-  }
-
-  function validateForm() {
-    const inputs = document.forms[0].querySelectorAll(":required");
-    for (let i = 0; i < inputs.length; i++) {
-      if (!inputs[i].value.trim()) {
-        alert("Пожалуйста, заполните все поля.");
-        return false;
-      }
-    }
-    return true;
-  }
-
-  function updateProgress() {
-    const percent = (currentStep / totalSteps) * 100;
-    document.getElementById("progress").style.width = percent + "%";
-  }
-
-  function toggleButtons(step) {
-    document.getElementById("prevBtn").style.display = step === 0 ? "none" : "inline-block";
-    document.getElementById("nextBtn").innerText = step === totalSteps - 1 ? "Завершить" : "Далее";
-  }
-
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-  }
-
-  showStep(0);
 </script>
 
 </body>
 </html>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.lang-switcher {
+  text-align: right;
+  margin-top: 10px;
+  padding-right: 20px;
+}
+
+header {
+  background: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+main {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.step {
+  display: none;
+}
+.step.active {
+  display: block;
+}
+
+.step input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.step button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.image-section {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.image-section img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+footer {
+  background: #eee;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9em;
+}
