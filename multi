@@ -1,209 +1,210 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Твоя трансформация начинается здесь</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #fffaf4;
-      color: #333;
-    }
-    header {
-      background: linear-gradient(to right, #ff9966, #ff5e62);
-      color: white;
-      padding: 60px 20px 30px;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 18px;
-      font-style: italic;
-    }
-    .form-container {
-      background: #ffffff;
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-    .form-container h2 {
-      color: #ff5e62;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .intro {
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 16px;
-      color: #555;
-    }
-    .form-step { display: none; }
-    .form-step.active { display: block; }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-    .button-row {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-    .button-row button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .button-row .next-btn {
-      background: #ff5e62;
-      color: #fff;
-    }
-    .button-row .prev-btn {
-      background: #ccc;
-      color: #333;
-    }
-    .pay-btn {
-      display: inline-block;
-      margin-top: 20px;
-      background: #28a745;
-      color: #fff;
-      text-decoration: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      font-size: 18px;
-    }
-    .image-banner {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .image-banner img {
-      max-width: 150px;
-      border-radius: 8px;
-    }
-    @media (max-width: 480px) {
-      header h1 { font-size: 24px; }
-      .button-row { flex-direction: column; }
-      .button-row button { width: 100%; margin-bottom: 10px; }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Худей без стресса</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://unpkg.com/aos @2.3.4/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
-<header>
-  <h1>Твоя трансформация начинается здесь</h1>
-  <p>Каждое усилие — это шаг к лучшей версии себя</p>
-</header>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX "
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-<div class="form-container">
-  <div class="intro">
-    Тебе мешает лишний вес? Хочешь измениться? Сделай первый шаг — ответь на несколько простых вопросов.
-  </div>
+  <!-- Yandex.Metrica -->
+  <noscript><div><img src="https://mc.yandex.ru/watch/12345678 " style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 
-  <form id="form">
-    <div class="form-step active">
-      <div class="image-banner"><img src="https://cdn-icons-png.flaticon.com/512/4440/4440466.png" alt="Силуэт 1"></div>
-      <div class="form-group"><label>Возраст:</label><input type="number" id="age" /></div>
-      <div class="form-group"><label>Рост (см):</label><input type="number" id="height" /></div>
-      <div class="form-group"><label>Вес (кг):</label><input type="number" id="weight" /></div>
-      <div class="form-group"><label>Цель:</label>
-        <select id="goal">
-          <option>Сбросить вес</option>
-          <option>Стать активнее</option>
-        </select>
-      </div>
-      <div class="button-row">
-        <span></span><button type="button" class="next-btn">Далее</button>
-      </div>
+  <header>
+    <div class="lang-switcher">
+      <button onclick="setLang('ru')">РУС</button>
+      <button onclick="setLang('en')">ENG</button>
+      <button onclick="setLang('es')">ESP</button>
+      <button onclick="setLang('de')">DEU</button>
     </div>
 
-    <div class="form-step">
-      <div class="image-banner"><img src="https://cdn-icons-png.flaticon.com/512/4440/4440401.png" alt="Силуэт 2"></div>
-      <div class="form-group"><label>Любимые продукты:</label><textarea id="favorites"></textarea></div>
-      <div class="button-row">
-        <button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button>
-      </div>
+    <h1 data-lang="ru">Худеем без стресса</h1>
+    <h1 data-lang="en" style="display: none;">Lose weight without stress</h1>
+    <h1 data-lang="es" style="display: none;">Pierde peso sin estrés</h1>
+    <h1 data-lang="de" style="display: none;">Abnehmen ohne Stress</h1>
+
+    <p data-lang="ru">Получите персональный кето-план всего за 60 секунд</p>
+    <p data-lang="en" style="display: none;">Get your personal keto plan in just 60 seconds</p>
+    <p data-lang="es" style="display: none;">Obtén tu plan cetogénico personal en solo 60 segundos</p>
+    <p data-lang="de" style="display: none;">Erhalte deinen persönlichen Keto-Plan in nur 60 Sekunden</p>
+  </header>
+
+  <section class="form-section" data-aos="fade-up">
+    <form action="https://formspree.io/f/YOUR_FORM_ID " method="POST">
+      <input type="text" name="name" placeholder="
+        Имя / Name / Nombre / Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <button type="submit">Получить план / Get Plan / Obtener plan / Plan erhalten</button>
+    </form>
+  </section>
+
+  <section class="features" data-aos="fade-up">
+    <div><img src="images/icon-clock.png" alt="">
+      <span data-lang="ru">До 6 фунтов за первую неделю</span>
+      <span data-lang="en" style="display: none;">Up to 6 lbs in the first week</span>
+      <span data-lang="es" style="display: none;">Hasta 6 libras en la primera semana</span>
+      <span data-lang="de" style="display: none;">Bis zu 6 Pfund in der ersten Woche</span>
     </div>
-
-    <div class="form-step">
-      <div class="image-banner"><img src="https://cdn-icons-png.flaticon.com/512/4440/4440448.png" alt="Силуэт 3"></div>
-      <div class="form-group"><label>Как часто вы завтракаете?</label>
-        <select id="breakfast">
-          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не завтракаю</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Обедаете ли вы?</label>
-        <select id="lunch">
-          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не обедаю</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Ужинаете ли вы?</label>
-        <select id="dinner">
-          <option>Регулярно</option><option>Иногда</option><option>Редко</option><option>Не ужинаю</option>
-        </select>
-      </div>
-      <div class="button-row">
-        <button type="button" class="prev-btn">Назад</button><button type="button" class="next-btn">Далее</button>
-      </div>
+    <div><img src="images/icon-food.png" alt="">
+      <span data-lang="ru">Персональное меню</span>
+      <span data-lang="en" style="display: none;">Personal menu</span>
+      <span data-lang="es" style="display: none;">Menú personalizado</span>
+      <span data-lang="de" style="display: none;">Persönliches Menü</span>
     </div>
-
-    <div class="form-step">
-      <div class="image-banner"><img src="https://cdn-icons-png.flaticon.com/512/2644/2644717.png" alt="Финальный силуэт"></div>
-      <h3 style="text-align:center;">Готово! Проверь свои данные и начни прямо сейчас.</h3>
-      <ul id="summaryList"></ul>
-      <div style="text-align:center;">
-        <a href="https://buy.stripe.com/5kA3ft6wgagD0DKdQQ" class="pay-btn">Оплатить программу</a>
-      </div>
-      <div class="button-row">
-        <button type="button" class="prev-btn">Назад</button><span></span>
-      </div>
+    <div><img src="images/icon-support.png" alt="">
+      <span data-lang="ru">Поддержка диетолога</span>
+      <span data-lang="en" style="display: none;">Dietitian support</span>
+      <span data-lang="es" style="display: none;">Soporte del nutricionista</span>
+      <span data-lang="de" style="display: none;">Ernährungsberater-Support</span>
     </div>
-  </form>
-</div>
+  </section>
 
-<script>
-  const steps = document.querySelectorAll('.form-step');
-  let current = 0;
-  const nextBtns = document.querySelectorAll('.next-btn');
-  const prevBtns = document.querySelectorAll('.prev-btn');
+  <footer>
+    <p><strong data-lang="ru">Отказ от ответственности:</strong><span data-lang="en" style="display: none;"><strong>Disclaimer:</strong></span><span data-lang="es" style="display: none;"><strong>Aviso:</strong></span><span data-lang="de" style="display: none;"><strong>Hinweis:</strong></span>
+      Результаты могут отличаться. Консультации не заменяют врачебные рекомендации.</p>
+    <p><a href="#">Политика конфиденциальности / Privacy Policy / Política de privacidad / Datenschutz</a></p>
+  </footer>
 
-  nextBtns.forEach(btn => btn.onclick = () => {
-    if (current < steps.length - 1) {
-      steps[current].classList.remove('active');
-      current++;
-      steps[current].classList.add('active');
+  <!-- AOS.js -->
+  <script src="https://unpkg.com/aos @2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+
+  <!-- Многоязычность -->
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        if (el.getAttribute('data-lang') === lang) {
+          el.style.display = 'inline';
+        } else {
+          el.style.display = 'none';
+        }
+      });
     }
-  });
 
-  prevBtns.forEach(btn => btn.onclick = () => {
-    if (current > 0) {
-      steps[current].classList.remove('active');
-      current--;
-      steps[current].classList.add('active');
-    }
-  });
-</script>
+    window.onload = () => setLang('ru');
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOURLINEID "></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YOURLINEID');
+  </script>
 
 </body>
 </html>
+ * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.lang-switcher {
+  text-align: right;
+  margin-top: 10px;
+  padding-right: 20px;
+}
+
+header {
+  background: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+header p {
+  font-size: 1em;
+  margin-top: 10px;
+}
+
+.form-section {
+  max-width: 90%;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+form button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 1em;
+}
+
+.features {
+  max-width: 90%;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.features div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+footer {
+  background: #eee;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+/* Адаптивность */
+@media (min-width: 600px) {
+  .form-section {
+    max-width: 400px;
+  }
+
+  header h1 {
+    font-size: 2.2em;
+  }
+
+  header p {
+    font-size: 1.2em;
+  }
+
+  .features {
+    max-width: 600px;
+  }
+}
